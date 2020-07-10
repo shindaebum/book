@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN' 
+	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace="leeyounjeong.book.user.dao.map.UserMap">
+	<select id='getUsers' resultType='user'> 
+		select user_id userId, user_name userName, user_pwd userPwd, phone_num phoneNum, address address ,reg_date regDate
+		from users 
+		order by user_id
+	</select>
+	
+	<select id='getUserIds' resultType='user'> 
+		select user_id userId
+		from users 
+		order by user_id
+	</select>
+	
+	<select id="getUser" parameterType="int" resultType="user">
+		select user_id userId, user_name userName, user_pwd userPwd, phone_num phoneNum, address address ,reg_date regDate
+		from users
+		where user_id = #{userId}
+	</select>
+	
+	<insert id="addUser" parameterType="string">
+		insert into users(user_id, user_name, user_pwd, phone_num, address, reg_date)
+		values(#{userId},#{userName},#{userPwd},#{phoneNum},#{address}, sysdate)
+	</insert>
+	
+	<update id="updateUser" parameterType="user">
+		update users 
+		set user_name= #{userName} , user_pwd = #{userPwd} , phone_num = #{phoneNum} , address = #{address}
+		where user_id = #{userId}
+	</update>
+	
+	<delete id="delUser" parameterType="int">
+		delete users
+		where user_id = #{userId}
+	</delete>
+	
+	<select id="loginUser" parameterType="user">
+		select *
+		from users
+		<where>
+			<if test="userId != null">
+				user_id=#{userId}
+			</if>
+			<if test="userPassword != null">
+				and user_pwd=#{userPwd}
+			</if>
+		</where>
+	</select>
+</mapper>

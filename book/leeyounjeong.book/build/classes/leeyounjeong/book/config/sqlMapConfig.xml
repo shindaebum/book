@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>        
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd"> 
+<configuration>
+	<properties resource="leeyounjeong/book/config/jdbc.properties"/> 
+	<typeAliases>
+		<typeAlias alias="user" type="leeyounjeong.book.user.domain.User" />
+		<typeAlias alias="book" type="leeyounjeong.book.book.domain.Book" />
+		<typeAlias type="leeyounjeong.book.order.domain.Order" alias="order"/>
+		<typeAlias type="leeyounjeong.book.delivery.domain.Delivery" alias="delivery"/>
+		<typeAlias alias="qa" type="leeyounjeong.book.qa.domain.Qa" /> 
+		<typeAlias type="leeyounjeong.book.book.domain.BookImg" alias="bookImg"/>
+	</typeAliases>
+	
+	<environments default="development"> 
+		<environment id = "development"> 
+			<transactionManager type="JDBC"/> 
+			<dataSource type="POOLED">
+				<property name="driver" value="${JDBC.Driver}" /> 
+				<property name="url" value="${JDBC.ConnectionURL}" />
+				<property name="username" value="${JDBC.Username}" />
+				<property name="password" value="${JDBC.Password}" />   
+			</dataSource>
+		</environment>	
+	</environments>
+	
+	<mappers> 
+		<mapper resource="leeyounjeong/book/user/dao/map/userMap.xml" />	
+		<mapper resource="leeyounjeong/book/qa/dao/map/qaMap.xml" />
+		<mapper resource="leeyounjeong/book/book/dao/map/bookMap.xml"/>
+		<mapper resource="leeyounjeong/book/order/dao/map/orderMap.xml"/>
+		<mapper resource="leeyounjeong/book/delivery/dao/map/deliveryMap.xml"/>
+	</mappers>
+</configuration>	

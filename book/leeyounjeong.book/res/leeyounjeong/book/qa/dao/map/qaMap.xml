@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN' 
+	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace="leeyounjeong.book.qa.dao.map.QaMap">
+	<select id='getQas' resultType='qa'>
+		select q.qa_num qaNum, q.qa_title qaTitle, q.qa_content qaContent, q.qa_date qaDate, 
+			q.qa_answer qaAnswer, u.user_id userId, u.user_pwd password
+		from qas q
+		join users u
+		on q.user_id = u.user_id
+		order by qa_num desc
+	</select>
+	
+	<select id='getQa' parameterType='int' resultType='qa'>
+		select q.qa_num qaNum, q.qa_title qaTitle, q.qa_content qaContent, q.qa_date qaDate, 
+			q.qa_answer qaAnswer, u.user_id userId, u.user_pwd password
+		from qas q
+		join users u
+		on q.user_id = u.user_id
+		where qa_num = #{qaNum}
+	</select>
+	
+	<insert id='addQa' parameterType='qa'>
+		insert into qas(qa_num, qa_title, qa_content, qa_date, qa_answer, user_id)
+		values(qanum_seq.nextval, #{qaTitle}, #{qaContent}, sysdate, #{qaAnswer, jdbcType=VARCHAR}, #{userId})
+	</insert>
+	
+	<update id='updateQa' parameterType='qa'>
+		update qas
+		set qa_title= #{qaTitle}, qa_content= #{qaContent}, qa_answer= #{qaAnswer}
+		where qa_num= #{qaNum}
+	</update>
+	
+	<delete id='delQa' parameterType='int' >
+		delete qas
+		where qa_num= #{qaNum}
+	</delete>
+</mapper>

@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN' 
+	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace="leeyounjeong.book.delivery.dao.map.DeliveryMap">
+	<select id='getDeliveries' resultType='delivery'>
+		select d.delivery_num deliveryNum
+		from deliveries d 
+		join orders o
+		on d.delivery_num = o.delivery_num
+	</select>
+	
+	<select id="getDelivery" parameterType="string" resultType="delivery">
+		select d.delivery_num deliveryNum
+		from deliveries d 
+		join orders o
+		on d.delivery_num = o.delivery_num
+		where d.delivery_num = #{o.deliveryNum, jdbcType=VARCHAR}
+	</select>
+	
+	<insert id="addDelivery" parameterType="string">
+		insert into deliveries
+		values(#{deliveryNum, jdbcType=VARCHAR})
+	</insert>
+</mapper>

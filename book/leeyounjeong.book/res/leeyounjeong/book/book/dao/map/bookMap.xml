@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN' 
+	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace="leeyounjeong.book.book.dao.map.BookMap">
+	<select id='getBooks' resultType='book'>
+		select ISBN ISBN, book_title bookTitle, book_price bookPrice, author author,
+			pub_name pubName, pub_date pubDate, book_type bookType, book_info bookInfo
+		from books
+	</select>
+	
+	<select id="getBook" parameterType="long" resultType='book'>
+		select ISBN ISBN, book_title bookTitle, book_price bookPrice, author author,
+			pub_name pubName, pub_date pubDate, book_type bookType, book_info bookInfo
+		from books
+		where ISBN = #{ISBN}
+	</select>
+	
+	<insert id="addBook" parameterType='book'>
+		insert into books
+			(ISBN, book_title, book_price, author, pub_name, pub_date, book_type, book_info)
+		values(#{ISBN},#{bookTitle},#{bookPrice},#{author},
+					#{pubName},#{pubDate},#{bookType},#{bookInfo})
+	</insert>
+	
+	<update id="updateBook" parameterType="book">
+		update books
+		set 
+			 book_price=#{bookPrice}, author=#{author}, pub_name=#{pubName},
+			 pub_date=#{pubDate}, book_type=#{bookType}, book_info=#{bookInfo}
+		where ISBN=#{ISBN}
+	</update>
+	
+	<delete id="delBook" parameterType="book">
+		delete books
+		where ISBN = #{ISBN}
+	</delete>
+	
+<!-- 이미지	 -->
+	<select id='getBookImg' parameterType='long' resultType='string'>
+		select book_img_name bookImgName
+		from book_imgs
+		where ISBN = #{ISBN}
+	</select>
+	
+	<insert id='addBookImg' parameterType="bookImg">
+		insert into book_imgs
+		values(#{ISBN},#{bookImgName})
+	</insert>
+	
+	<update id='modifyBookImgName' parameterType="bookImg">
+		update book_imgs
+		set book_img_name = #{bookImgName}
+		where ISBN=#{ISBN}
+	</update>
+	
+</mapper>
